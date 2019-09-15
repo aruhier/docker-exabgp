@@ -1,11 +1,9 @@
-FROM alpine:3.7
-MAINTAINER Mike Nowak <https://github.com/mikenowak>
+FROM python:3-alpine
+MAINTAINER Anthony Ruhier <https://github.com/aruhier>
 
-RUN apk --no-cache add wget curl python python-dev py-setuptools coreutils netcat-openbsd bash \
-    && apk --no-cache add --virtual build-dependencies build-base py-pip  \
-    && mkdir -p /usr/etc/exabgp \
-    && pip install ipaddr exabgp ipy requests \
-    && apk del build-dependencies 
+RUN pip install --upgrade pip setuptools
+RUN mkdir -p /usr/etc/exabgp \
+    && pip install exabgp
 
 ADD entrypoint.sh /
 ADD exabgp.conf.example /usr/etc/exabgp/
